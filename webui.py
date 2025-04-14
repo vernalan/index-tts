@@ -68,4 +68,4 @@ with gr.Blocks() as demo:
 
 if __name__ == "__main__":
     demo.queue(20)
-    demo.launch(server_name="127.0.0.1")
+    demo.launch(share=True)
