@@ -20,6 +20,7 @@ Experience **IndexTTS**: Please contact <u>xuanwu@bilibili.com</u> for more deta
 ### Contact
 QQ群：553460296 \
 Discord：https://discord.gg/uT32E7KDmy  \
+简历：indexspeech@bilibili.com  \
 欢迎大家来交流讨论！
 ## 📣 Updates
 
@@ -50,7 +51,22 @@ The main improvements and contributions are summarized as follows:
 
 ## 📑 Evaluation
 
-**Word Error Rate (WER) Results for IndexTTS and Baseline Models**
+**Word Error Rate (WER) Results for IndexTTS and Baseline Models on the** [**seed-test**](https://github.com/BytedanceSpeech/seed-tts-eval)
+
+| **WER**                | **test_zh** | **test_en** | **test_hard** |
+|:----------------------:|:-----------:|:-----------:|:-------------:|
+| **Human**              | 1.26        | 2.14        | -             |
+| **SeedTTS**            | 1.002       | 1.945       | **6.243**         |
+| **CosyVoice 2**        | 1.45        | 2.57        | 6.83          |
+| **F5TTS**              | 1.56        | 1.83        | 8.67          |
+| **FireRedTTS**         | 1.51        | 3.82        | 17.45         |
+| **MaskGCT**            | 2.27        | 2.62        | 10.27         |
+| **Spark-TTS**          | 1.2         | 1.98        | -             |
+| **MegaTTS 3**          | 1.36        | **1.82**        | -             |
+| **IndexTTS**           | **0.937**       | 1.936       | 6.831         |
+
+
+**Word Error Rate (WER) Results for IndexTTS and Baseline Models on the other opensource test**
 
 
 |    **Model**    | **aishell1_test** | **commonvoice_20_test_zh** | **commonvoice_20_test_en** | **librispeech_test_clean** |  **avg** |
@@ -109,11 +125,14 @@ apt-get install ffmpeg
 Download by `huggingface-cli`:
 
 ```bash
-# 如果下载速度慢，可以使用官方的镜像
-export HF_ENDPOINT="https://hf-mirror.com"
 huggingface-cli download IndexTeam/Index-TTS \
   bigvgan_discriminator.pth bigvgan_generator.pth bpe.model dvae.pth gpt.pth unigram_12000.vocab \
   --local-dir checkpoints
+```
+
+Recommended for China users. 如果下载速度慢，可以使用镜像：
+```bash
+export HF_ENDPOINT="https://hf-mirror.com"
 ```
 
 Or by `wget`:
@@ -154,9 +173,24 @@ indextts --help
 
 #### Web Demo
 ```bash
+pip install -e ".[webui]"
 python webui.py
 ```
 Open your browser and visit `http://127.0.0.1:7860` to see the demo.
+
+#### Note for Windows Users
+
+On Windows, you may encounter [an error](https://github.com/index-tts/index-tts/issues/61) when installing `pynini`:
+`ERROR: Failed building wheel for pynini`
+
+In this case, please install `pynini` via `conda`:
+
+```bash
+# after conda activate index-tts
+conda install -c conda-forge pynini==2.1.5
+pip install WeTextProcessing==1.0.3
+pip install -e ".[webui]"
+```
 
 #### Sample Code
 ```python
